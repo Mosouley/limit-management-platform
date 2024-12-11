@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Counterparties from "./pages/Counterparties";
 import LimitTypes from "./pages/LimitTypes";
+import Exposures from "./pages/Exposures";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/counterparties" element={<Counterparties />} />
           <Route path="/limit-types" element={<LimitTypes />} />
+          <Route path="/exposures" element={<Exposures />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
