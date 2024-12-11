@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Counterparties from "./pages/Counterparties";
+import LimitTypes from "./pages/LimitTypes";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/counterparties" element={<Counterparties />} />
+          <Route path="/limit-types" element={<LimitTypes />} />
         </Routes>
       </BrowserRouter>
     </TooltipProvider>

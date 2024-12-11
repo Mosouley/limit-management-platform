@@ -28,39 +28,36 @@ import { Textarea } from "@/components/ui/textarea";
 import { Plus, Upload, Pencil, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
-interface Counterparty {
+interface LimitType {
   id: number;
-  name: string;
   short_name: string;
-  description: string;
-  category: "non-group" | "group";
+  full_name: string;
+  category: "balance-sheet" | "off-balance-sheet";
 }
 
-const Counterparties = () => {
-  const [counterparties, setCounterparties] = useState<Counterparty[]>([]);
+const LimitTypes = () => {
+  const [limitTypes, setLimitTypes] = useState<LimitType[]>([]);
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const newCounterparty = {
-      id: counterparties.length + 1,
-      name: formData.get("name") as string,
+    const newLimitType = {
+      id: limitTypes.length + 1,
       short_name: formData.get("short_name") as string,
-      description: formData.get("description") as string,
-      category: formData.get("category") as "non-group" | "group",
+      full_name: formData.get("full_name") as string,
+      category: formData.get("category") as "balance-sheet" | "off-balance-sheet",
     };
-    setCounterparties([...counterparties, newCounterparty]);
+    setLimitTypes([...limitTypes, newLimitType]);
     toast({
       title: "Success",
-      description: "Counterparty added successfully",
+      description: "Limit Type added successfully",
     });
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      // Here we would process the Excel file
       toast({
         title: "File Upload",
         description: "Excel file processing would be implemented here",
@@ -72,26 +69,20 @@ const Counterparties = () => {
     <DashboardLayout>
       <div className="space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Counterparties</h1>
+          <h1 className="text-3xl font-bold">Limit Types</h1>
           <div className="flex gap-2">
             <Dialog>
               <DialogTrigger asChild>
                 <Button>
                   <Plus className="mr-2 h-4 w-4" />
-                  Add Counterparty
+                  Add Limit Type
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Add New Counterparty</DialogTitle>
+                  <DialogTitle>Add New Limit Type</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div>
-                    <label htmlFor="name" className="text-sm font-medium">
-                      Name
-                    </label>
-                    <Input id="name" name="name" required />
-                  </div>
                   <div>
                     <label htmlFor="short_name" className="text-sm font-medium">
                       Short Name
@@ -99,10 +90,10 @@ const Counterparties = () => {
                     <Input id="short_name" name="short_name" required />
                   </div>
                   <div>
-                    <label htmlFor="description" className="text-sm font-medium">
-                      Description
+                    <label htmlFor="full_name" className="text-sm font-medium">
+                      Full Name
                     </label>
-                    <Textarea id="description" name="description" />
+                    <Textarea id="full_name" name="full_name" required />
                   </div>
                   <div>
                     <label htmlFor="category" className="text-sm font-medium">
@@ -113,13 +104,13 @@ const Counterparties = () => {
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="non-group">NON-GROUP</SelectItem>
-                        <SelectItem value="group">GROUP</SelectItem>
+                        <SelectItem value="balance-sheet">BALANCE SHEET</SelectItem>
+                        <SelectItem value="off-balance-sheet">OFF BALANCE SHEET</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   <Button type="submit" className="w-full">
-                    Save Counterparty
+                    Save Limit Type
                   </Button>
                 </form>
               </DialogContent>
@@ -146,20 +137,18 @@ const Counterparties = () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Name</TableHead>
               <TableHead>Short Name</TableHead>
+              <TableHead>Full Name</TableHead>
               <TableHead>Category</TableHead>
-              <TableHead>Description</TableHead>
               <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {counterparties.map((counterparty) => (
-              <TableRow key={counterparty.id}>
-                <TableCell>{counterparty.name}</TableCell>
-                <TableCell>{counterparty.short_name}</TableCell>
-                <TableCell>{counterparty.category}</TableCell>
-                <TableCell>{counterparty.description}</TableCell>
+            {limitTypes.map((limitType) => (
+              <TableRow key={limitType.id}>
+                <TableCell>{limitType.short_name}</TableCell>
+                <TableCell>{limitType.full_name}</TableCell>
+                <TableCell>{limitType.category}</TableCell>
                 <TableCell className="text-right space-x-2">
                   <Button variant="ghost" size="icon">
                     <Pencil className="h-4 w-4" />
@@ -177,4 +166,4 @@ const Counterparties = () => {
   );
 };
 
-export default Counterparties;
+export default LimitTypes;
