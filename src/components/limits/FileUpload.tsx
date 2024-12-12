@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { parseExcelFile, validateExcelFile } from "@/utils/fileUpload";
 
 interface FileUploadProps {
@@ -27,13 +27,21 @@ export const FileUpload = ({ onUploadSuccess }: FileUploadProps) => {
 
     setIsUploading(true);
     try {
+      console.log('Starting file parse...');
       const data = await parseExcelFile(file);
+      console.log('Parsed data:', data);
+      
+      if (data.length === 0) {
+        throw new Error('No data found in the Excel file');
+      }
+
       onUploadSuccess(data);
       toast({
         title: "Upload successful",
-        description: "Excel file has been processed successfully",
+        description: `Successfully processed ${data.length} records from Excel file`,
       });
     } catch (error) {
+      console.error('File upload error:', error);
       toast({
         title: "Upload failed",
         description: error instanceof Error ? error.message : "Failed to process Excel file",
@@ -61,9 +69,12 @@ export const FileUpload = ({ onUploadSuccess }: FileUploadProps) => {
           variant="outline"
           className="cursor-pointer"
           disabled={isUploading}
+          asChild
         >
-          <Upload className="mr-2 h-4 w-4" />
-          {isUploading ? "Processing..." : "Upload Excel"}
+          <span>
+            <Upload className="mr-2 h-4 w-4" />
+            {isUploading ? "Processing..." : "Upload Excel"}
+          </span>
         </Button>
       </label>
     </div>
