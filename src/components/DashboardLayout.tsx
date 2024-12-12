@@ -1,6 +1,7 @@
 import { SidebarProvider, Sidebar, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar";
 import { Building2, CreditCard, FileText, AlertTriangle, BarChart3, Home } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
@@ -19,8 +20,9 @@ export const DashboardLayout = ({ children }: { children: React.ReactNode }) => 
       <div className="min-h-screen flex w-full bg-background">
         <Sidebar className="border-r">
           <SidebarContent>
-            <div className="flex h-14 items-center border-b px-6">
+            <div className="flex h-14 items-center justify-between border-b px-6">
               <span className="font-semibold">Credit Management</span>
+              <ThemeToggle />
             </div>
             <SidebarGroup>
               <SidebarGroupContent>
