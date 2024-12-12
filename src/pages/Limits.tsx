@@ -24,9 +24,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Upload, Pencil, Trash2 } from "lucide-react";
+import { Plus, Pencil, Trash2 } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { FileUpload } from "@/components/limits/FileUpload";
 
 interface Limit {
   id: number;
@@ -73,14 +74,12 @@ const Limits = () => {
     });
   };
 
-  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      toast({
-        title: "File Upload",
-        description: "Excel file processing would be implemented here",
-      });
-    }
+  const handleUploadSuccess = (data: any[]) => {
+    const newLimits = data.map((item, index) => ({
+      ...item,
+      id: limits.length + index + 1,
+    }));
+    setLimits([...limits, ...newLimits]);
   };
 
   return (
@@ -208,21 +207,7 @@ const Limits = () => {
               </DialogContent>
             </Dialog>
 
-            <div className="relative">
-              <input
-                type="file"
-                accept=".xlsx,.xls"
-                onChange={handleFileUpload}
-                className="hidden"
-                id="excel-upload"
-              />
-              <label htmlFor="excel-upload">
-                <Button variant="outline" className="cursor-pointer">
-                  <Upload className="mr-2 h-4 w-4" />
-                  Upload Excel
-                </Button>
-              </label>
-            </div>
+            <FileUpload onUploadSuccess={handleUploadSuccess} />
           </div>
         </div>
 
