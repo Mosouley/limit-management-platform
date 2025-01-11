@@ -16,39 +16,43 @@ const BeamDemo = () => {
 
   return (
     <DashboardLayout>
-      <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800">
-        {/* Animated beams */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(5)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute h-[50vh] w-[2px] bg-gradient-to-b from-purple-500/20 to-cyan-500/20"
-              style={{
-                left: `${(i + 1) * 20}%`,
-                filter: "blur(8px)",
-              }}
-              animate={{
-                height: ["50vh", "70vh", "50vh"],
-                y: [0, -30, 0],
-              }}
-              transition={{
-                duration: 4 + i,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-        </div>
+      <div className="relative min-h-[calc(100vh-4rem)] w-full overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800">
+        {/* Static beams */}
+        {[...Array(5)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute h-[50vh] w-[2px]"
+            style={{
+              left: `${(i + 1) * 20}%`,
+              background: `linear-gradient(to bottom, 
+                ${i % 2 === 0 ? 'rgb(168, 85, 247)' : 'rgb(34, 211, 238)'}, 
+                transparent)`,
+              filter: "blur(4px)",
+              opacity: 0.4,
+            }}
+            animate={{
+              height: ["50vh", "70vh", "50vh"],
+              y: [0, -30, 0],
+            }}
+            transition={{
+              duration: 4 + i,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        ))}
 
         {/* Interactive beam following mouse */}
         <motion.div
-          className="pointer-events-none absolute h-[60vh] w-[3px] bg-gradient-to-b from-purple-500/40 to-cyan-500/40"
+          className="pointer-events-none absolute h-[60vh] w-[3px]"
           style={{
-            left: mousePosition.x,
-            filter: "blur(8px)",
+            background: "linear-gradient(to bottom, rgb(168, 85, 247), rgb(34, 211, 238))",
+            filter: "blur(4px)",
+            opacity: 0.6,
           }}
           animate={{
             x: mousePosition.x,
+            y: mousePosition.y - 300,
           }}
           transition={{
             type: "spring",
@@ -58,10 +62,16 @@ const BeamDemo = () => {
         />
 
         {/* Collision effect at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-orange-500/30 to-transparent" />
+        <div 
+          className="absolute bottom-0 left-0 right-0 h-32"
+          style={{
+            background: "linear-gradient(to top, rgba(234, 88, 12, 0.3), transparent)",
+            boxShadow: "0 0 40px 20px rgba(234, 88, 12, 0.1)",
+          }}
+        />
         
         {/* Content */}
-        <div className="relative z-10 flex min-h-screen items-center justify-center">
+        <div className="relative z-10 flex min-h-[calc(100vh-4rem)] items-center justify-center">
           <h1 className="text-center text-4xl font-bold text-white md:text-6xl">
             Interactive Beam Animation
           </h1>
