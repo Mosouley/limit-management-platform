@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import DashboardLayout from "@/components/DashboardLayout";
+import { DashboardLayout } from "@/components/DashboardLayout";
 
 const BeamDemo = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
