@@ -9,6 +9,7 @@ import Counterparties from "./pages/Counterparties";
 import LimitTypes from "./pages/LimitTypes";
 import Exposures from "./pages/Exposures";
 import Limits from "./pages/Limits";
+import BeamDemo from "./pages/BeamDemo";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/limit-types" element={<LimitTypes />} />
             <Route path="/exposures" element={<Exposures />} />
             <Route path="/limits" element={<Limits />} />
+            <Route path="/beam-demo" element={<BeamDemo />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
